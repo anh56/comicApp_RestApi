@@ -1,6 +1,8 @@
 package com.example.comicApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -39,6 +41,25 @@ public class Comic {
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(
+            mappedBy = "comic",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Chapter> chapters = new ArrayList<>();
+
+    public void addChapter(Chapter chapter){
+        chapters.add(chapter);
+        chapter.setComic(this);
+    }
+
+    public void removeChapter(Chapter chapter){
+        chapters.remove(chapter);
+        chapter.setComic(null);
+    }
+
+
 
     public Long getId() {
         return id;

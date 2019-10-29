@@ -49,7 +49,7 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/crawler")
+    @GetMapping("/categoryCrawler")
     public boolean crawlerTest() throws IOException{
         Document doc = Jsoup.connect("https://truyenfull.vn/").get();
         System.out.println("Title: "+ doc.title());

@@ -2,6 +2,7 @@ package com.example.comicApp.util;
 
 import com.example.comicApp.constant.StatusCode;
 import com.example.comicApp.model.Category;
+import com.example.comicApp.model.Chapter;
 import com.example.comicApp.model.Comic;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,7 +67,7 @@ public class ResponseUtil {
         node.put("id", category.getId());
         node.put("title", category.getTitle());
         node.put("content", category.getContent());
-        node.set("notes", returnListNode(category.getComics()));
+        node.set("comics", returnListNode(category.getComics()));
         return node;
     }
 
@@ -77,4 +78,22 @@ public class ResponseUtil {
         }
         return node;
     }
+
+    public static ObjectNode returnChapter(Chapter chapter) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("id", chapter.getId());
+        node.put("title", chapter.getTitle());
+        node.set("notes", returnComic(chapter.getComics()));
+        return node;
+    }
+
+    public static ArrayNode returnListChapter(List<Chapter> chapters) {
+        ArrayNode node = mapper.createArrayNode();
+        for (Chapter chapter : chapters) {
+            node.add((returnChapter(chapter)));
+        }
+        return node;
+    }
+
+
 }
