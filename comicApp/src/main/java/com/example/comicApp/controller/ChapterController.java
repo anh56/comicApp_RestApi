@@ -51,29 +51,19 @@ import static com.example.comicApp.util.ResponseUtil.returnListChapter;
     @GetMapping("/chapterCrawler")
     public boolean crawlerTest() throws IOException
     {
-        int i = 1;
-        int j =1;
+        String url = "https://truyenfull.vn/lao-dai-deu-yeu-ta/chuong-117/";
+        Document doc = Jsoup.connect(url).get();
+        System.out.println("Title: " + doc.title());
 
-             while (i != 0)
-             {
-                 String url = "https://truyenfull.vn/choc-tuc-vo-yeu-mua-mot-tang-mot-241019//trang-"+i+"/#list-chapter";
-                 Document doc = Jsoup.connect(url).get();
-                 System.out.println("Title: " + doc.title());
-                 while (j != 0)
-                 {
 
-                     Elements chapters = doc.select("#list-chapter > div.row > div:nth-child(1) > ul > li> a");
-                     ////#list-chapter > div.row > div:nth-child(1) > ul
-                     //#list-chapter > div.row > div:nth-child(1) > ul > li:nth-child(" + i + ") > a
+        //Elements chapters = doc.select("#chapter-nav-top > div > select");
+        Elements chapters = doc.select("#chapter-nav-top > div > select");
+
+
                      for (Element chapter : chapters)
                      {
-                         System.out.println("Chapter name: " + chapter.text());
-                         System.out.println("Link: " + chapter.attr("href"));
+                         System.out.println("Got: " + chapter.attr("option"));
                      }
-                     j++;
-                 }
-                 i++;
-             }
         return true;
     }
 
@@ -90,4 +80,9 @@ import static com.example.comicApp.util.ResponseUtil.returnListChapter;
 //        return  true;
 
 
-
+//System.out.println("Chapter name: " + chapters.attr("option"));
+////#list-chapter > div.row > div:nth-child(1) > ul
+//#list-chapter > div.row > div:nth-child(1) > ul > li:nth-child(" + i + ") > a
+//#chapter-nav-top > div > select > option:nth-child(1) //#chapter-nav-top > div > select //#chapter-nav-top > div > select
+//#prev_chap //document.querySelector("#chapter-nav-top > div > select")
+//#chapter-nav-top > div > select > option:nth-child(1) //#chapter-nav-top > div > select > option:nth-child(9) //#chapter-nav-top > div > select > option:nth-child(117)
